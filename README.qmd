@@ -1,0 +1,10 @@
+---
+title: "README.qmd"
+format: html
+---
+
+README:
+
+This directory (~/code/TEAL/) is umbrella dir.
+
+Actual, individual TEAL projects are one level down.

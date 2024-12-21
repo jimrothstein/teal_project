@@ -1,0 +1,8 @@
+---
+title: "README.qmd"
+format: html
+---
+README for single TEAL project
+
+SEE:
+https://pharmaverse.github.io/blog/posts/2024-07-22_teal_app_development_pharmaverseadam/teal-app-development.html
