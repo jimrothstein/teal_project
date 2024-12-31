@@ -4,7 +4,7 @@
 library(teal)
 library(teal.data)
 
-# TWO ways to pre-pr0cess dataset (if know or not the KEys)
+# TWO ways to pre-process dataset (if KNOW or NOT KNOW the KEys)
 # quick start for clinical trial data
 my_data <- cdisc_data(
   ADSL = example_cdisc_data("ADSL"),

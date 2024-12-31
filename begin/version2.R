@@ -18,10 +18,20 @@ library(pharmaverseadam)
 # )
 
 # USE: -- we specify keys
-data <- within(teal_data(), {
+# error = seems to be known, up-stream;  ignore 
+data <- base::within(teal_data(), {
   ADAE <- pharmaverseadam::adae
   ADSL <- pharmaverseadam::adsl
 })
+
+my_data <- within(teal_data(), {
+  ADSL <- example_cdisc_data("ADSL")
+  ADTTE <- example_cdisc_data("ADTTE")
+})
+
+datanames <- c("ADSL", "ADTTE")
+datanames(my_data) <- datanames
+join_keys(my_data) <- default_cdisc_join_keys[datanames]
 
 datanames(data) <- c("ADAE", "ADSL")
 join_keys(data) <- default_cdisc_join_keys[datanames(data)]

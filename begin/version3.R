@@ -45,3 +45,4 @@ modules = modules(
 
 # Step 4: run shiny app
 shinyApp(app$ui, app$server)
+
