@@ -1,0 +1,21 @@
+# https://insightsengineering.github.io/teal/latest-tag/articles/getting-started-with-teal.html
+# TEAL 'Getting Started'
+library(teal)
+
+app <- init(
+  data = teal_data(IRIS = iris, MTCARS = mtcars),
+  modules = modules(
+    example_module("Module 1"),
+    example_module("Module 2")
+  ),
+  filter = teal_slices(
+    teal_slice(dataname = "IRIS", varname = "Species", selected = "setosa")
+  )
+) |>
+  modify_title("My first teal application") |>
+  modify_header(h3("My first teal application")) |>
+  modify_footer(tags$div(a("Powered by teal", href = "https://insightsengineering.github.io/teal/latest-tag/")))
+
+if (interactive()) {
+  shinyApp(app$ui, app$server)
+}
