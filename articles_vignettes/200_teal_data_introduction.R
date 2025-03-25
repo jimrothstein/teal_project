@@ -6,7 +6,7 @@
 
 library(teal.data)
 
-# create teal_data object
+# create teal_data object [Rstudio error ?? ERROR:  obj_size .... bad binding access]
 	my_data <- teal_data()
 	
 # run code within teal_data to create data objects

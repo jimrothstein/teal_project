@@ -1,6 +1,9 @@
 # https://insightsengineering.github.io/teal/latest-tag/articles/getting-started-with-teal.html
 # TEAL 'Getting Started'
 
+
+
+#### app 1 ----
 library(teal)
 
 app <- init(
@@ -18,7 +21,7 @@ if (interactive()) {
   shinyApp(app$ui, app$server)
 }
 
-#### ----    EXTEND ,  cleaner than above.
+#### app 2----    EXTEND ,  cleaner than above. ----
 library(teal)
 
 app <- init(
@@ -34,7 +37,7 @@ if (interactive()) {
   shinyApp(app$ui, app$server)
 }
 
-#### ----  Global and specific modules (4 modules display)
+#### app 3 ----  Global and specific modules (4 modules display) ----
 library(teal)
 
 app <- init(
