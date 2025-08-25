@@ -1,0 +1,80 @@
+---
+title: "`teal` applications"
+order: 1
+---
+
+Working Example: https://pharmaverse.github.io/examples/interactive/teal.html \
+(source:  https://github.com/pharmaverse/examples/blob/main/interactive/teal.qmd )
+
+[`teal`](https://insightsengineering.github.io/teal/latest-tag/) is a Shiny-based framework that streamlines the process of creating an application for clinical trials data. App developers are required to specify input data as well as analysis modules choosing from a wide range of available modules or creating their own module.
+
+The main features of a `teal` app include:
+
+* filter panel allowing to filtering input data for e.g. subgroup analysis
+* reproducibility code for each output
+* reporter to export the results
+* and more...
+
+Please visit [`teal` package webpage](https://insightsengineering.github.io/teal/latest-tag/) to see more. Please also see [`teal.gallery`](https://insightsengineering.github.io/teal.gallery/) for more examples.
+
+Below you can find a few examples using [WebR](https://docs.r-wasm.org/webr/latest/) (via [Shinylive](https://shiny.posit.co/py/get-started/shinylive.html)). This will run applications directly in the browser without any server in the background. You are free to change the source code and the application will refresh accordingly.
+
+
+# A simple example for clinical trials data with custom module
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+#| components: [viewer, editor]
+#| layout: vertical
+library(teal)
+library(tern)
+library(dplyr)
+
+adsl <- tern_ex_adsl %>%
+  df_explicit_na()
+
+app <- init(
+  data = cdisc_data(
+    adsl = adsl
+  ),
+  modules = list(
+    module(
+      "demographic table",
+      server = function(input, output, session, data) {
+        output$table <- renderUI({
+          validate(need(input$vars, "Please select summary variables"))
+
+          lyt <- basic_table(show_colcounts = TRUE) %>%
+            split_cols_by(var = "ACTARM") %>%
+            add_overall_col("All Patients") %>%
+            analyze_vars(
+                vars = input$vars,
+                var_labels = var_labels(data()[["adsl"]][, input$vars])
+            )
+
+            result <- build_table(lyt, adsl)
+
+            as_html(result)
+        })
+      },
+      ui = function(id) {
+        ns <- NS(id)
+        list(
+          shiny::selectInput(
+            ns("vars"),
+            "Summary variables",
+            choices = c("AGE", "SEX", "RACE", "STRATA1", "STRATA2", "BMRKR1", "BMRKR2"),
+            selected = c("AGE", "SEX", "RACE"),
+            multiple = TRUE
+          ),
+          uiOutput(ns("table"))
+        )
+      }
+    )
+  )
+)
+
+shinyApp(app$ui, app$server)
+```
+

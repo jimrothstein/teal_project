@@ -1,0 +1,65 @@
+---
+title: "`teal` applications"
+order: 1
+---
+
+Working Example: https://pharmaverse.github.io/examples/interactive/teal.html \
+(source:  https://github.com/pharmaverse/examples/blob/main/interactive/teal.qmd )
+
+[`teal`](https://insightsengineering.github.io/teal/latest-tag/) is a Shiny-based framework that streamlines the process of creating an application for clinical trials data. App developers are required to specify input data as well as analysis modules choosing from a wide range of available modules or creating their own module.
+
+The main features of a `teal` app include:
+
+* filter panel allowing to filtering input data for e.g. subgroup analysis
+* reproducibility code for each output
+* reporter to export the results
+* and more...
+
+Please visit [`teal` package webpage](https://insightsengineering.github.io/teal/latest-tag/) to see more. Please also see [`teal.gallery`](https://insightsengineering.github.io/teal.gallery/) for more examples.
+
+Below you can find a few examples using [WebR](https://docs.r-wasm.org/webr/latest/) (via [Shinylive](https://shiny.posit.co/py/get-started/shinylive.html)). This will run applications directly in the browser without any server in the background. You are free to change the source code and the application will refresh accordingly.
+
+# A simple example for non-clinical trials data with custom module
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+#| components: [viewer, editor]
+#| layout: vertical
+library(teal)
+
+app <- init(
+  data = teal_data(iris = iris),
+  modules = list(
+    module(
+      label = "iris histogram",
+      server = function(input, output, session, data) {
+        updateSelectInput(session = session,
+                          inputId =  "var",
+                          choices = names(data()[["iris"]])[1:4])
+
+        output$hist <- renderPlot({
+          req(input$var)
+          hist(
+            x = data()[["iris"]][[input$var]],
+            main = sprintf("Histogram of %s", input$var),
+            xlab = input$var
+          )
+        })
+      },
+      ui = function(id) {
+        ns <- NS(id)
+        list(
+          selectInput(inputId = ns("var"),
+                      label =  "Column name",
+                      choices = NULL),
+          plotOutput(outputId = ns("hist"))
+        )
+      }
+    )
+  )
+)
+
+shinyApp(app$ui, app$server)
+```
+
