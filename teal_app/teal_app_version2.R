@@ -16,6 +16,7 @@ data <- within(teal_data(), {
 
 datanames(data) <- c("ADAE", "ADSL")
 join_keys(data) <- default_cdisc_join_keys[datanames(data)]
+join_keys(data) <- default_cdisc_join_keys[names(data)]
 })
 
 # Step 3: initialize teal app
@@ -26,7 +27,7 @@ app <- init(
 
 
 
-Step 4: run shiny app
+#Step 4: run shiny app
 shinyApp(app$ui, app$server)
 
 
