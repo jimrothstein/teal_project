@@ -1,5 +1,5 @@
 # Step 1: import packages
-
+## PURPOSE:    using pharmaverseadam data, display in TEAL app
 library(teal)
 library(pharmaverseadam)
 

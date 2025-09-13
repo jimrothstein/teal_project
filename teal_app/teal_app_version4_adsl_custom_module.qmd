@@ -3,6 +3,8 @@ title: "`teal` applications"
 order: 1
 ---
 
+When rendered, this qmd file shows code , but no quarto (or teal) app runs
+
 Working Example: https://pharmaverse.github.io/examples/interactive/teal.html \
 (source:  https://github.com/pharmaverse/examples/blob/main/interactive/teal.qmd )
 
